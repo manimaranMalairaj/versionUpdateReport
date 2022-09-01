@@ -40,18 +40,18 @@ versionDetails = {
             authors: ["kamal", "ram"],
             type: "patch"
         }],
-    bugDescription: {
-        "#123": "Possibility of tapping/clicking buttons repeatedly",
-        "#736": "Progress indicator",
-        "#6DHJ7": "Repeated results on the list",
-        "#DHU8": "Skipping selector on buttons",
-        "#1M3": "Portrait/landscape orientation of the app",
-        "#1S6": "Crash after tapping on button",
-        "#1JI": "No error handling",
-        "#787H": "Page layout at different screen resolutions/densities",
-        "#RT3": "Specify the input type",
-        "#73": "Push notifications",
-    }
+    bugDetails: [
+        { bugsID: "#123", Description: "Possibility of tapping/clicking buttons repeatedly" },
+        { bugsID: "#736", Description: "Progress indicator" },
+        { bugsID: "#6DHJ7", Description: "Repeated results on the list" },
+        { bugsID: "#DHU8", Description: "Skipping selector on buttons" },
+        { bugsID: "#1M3", Description: "Portrait/landscape orientation of the app" },
+        { bugsID: "#1S6", Description: "Crash after tapping on button" },
+        { bugsID: "#1JI", Description: "No error handling" },
+        { bugsID: "#787H", Description: "Page layout at different screen resolutions/densities" },
+        { bugsID: "#RT3", Description: "Specify the input type" },
+        { bugsID: "#73", Description: "Push notifications" },
+    ]
 }
 
 // Enter the details here ...
@@ -62,11 +62,11 @@ var year = "2022"                                                               
 
 // Question : 2 , In which release did we have the bug "_____" ?
 
-var yourBugID = "#787H"                                                         // Enter the bugg ID here as a string
+var yourBugID = "#RT3"                                                         // Enter the bugg ID here as a string
 
 // Question : 3 , Who is the contributor who has worked on most of the releases?
 
-// The name of the contributor who has worked on many no of releases will be displayed
+    // The name of the contributor who has worked on many no of releases will be displayed
 
 // Question : 4 , How many releases on perticular type ? Ex : major,patch,enhancement
 
@@ -81,7 +81,7 @@ var feature = "removingBug"                                                     
 // Filtering functions
 
 var updates = versionDetails.releases
-var bugs = versionDetails.bugDescription
+var bugs = versionDetails.bugDetails
 
 // Function 1 : Find no of updates in a year.
 
@@ -96,7 +96,12 @@ function findNameOfReleaseOfABug(bugID) {
     updates.forEach(element => {
         if (element.bugID.includes(bugID)) {
             console.log(`\nThe name of the release which has the bug '${bugID}' is :`, element.name)
-            console.log(`" Bug ID :- ${bugID}`, `\n  Description :- ${bugs[bugID]} "`)
+            bugs.filter(function (element) {
+                if (element.bugsID == bugID) {
+                    console.log(`" Bug ID : ${element.bugsID}`)
+                    console.log(` Description : ${element.Description} "`)
+                }
+            })
         }
     })
 }
