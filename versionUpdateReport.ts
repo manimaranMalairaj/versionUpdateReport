@@ -1,6 +1,6 @@
-interface updatesType {name:string ;releaseDate:string; bugID:string[];features:string[];authors:string[];type_:string}
+interface UpdatesType {name:string ;releaseDate:string; bugID:string[];features:string[];authors:string[];type_:string}
 
-let updates :updatesType []  = 
+let updates :UpdatesType []  = 
 [
     {
         name : "V1",
