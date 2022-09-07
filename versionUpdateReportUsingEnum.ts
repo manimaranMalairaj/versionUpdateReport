@@ -1,10 +1,10 @@
 enum TypeOfType_ { major, patch, enhancement }
 
-interface updatesType { name: string; releaseDate: string; bugID: string[]; features: string[]; authors: string[]; type_: TypeOfType_ }
-interface bugDetailsType { bugsID: string; Description: string }
-interface versionDetailsType { releases: updatesType[]; bugDetails: bugDetailsType[] }
+interface UpdatesType { name: string; releaseDate: string; bugID: string[]; features: string[]; authors: string[]; type_: TypeOfType_ }
+interface BugDetailsType { bugsID: string; Description: string }
+interface VersionDetailsType { releases: UpdatesType[]; bugDetails: BugDetailsType[] }
 
-let versionDetails: versionDetailsType = {
+let versionDetails: VersionDetailsType = {
     releases: [
         {
             name: "V1",
