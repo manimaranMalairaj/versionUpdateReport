@@ -1,6 +1,6 @@
-enum TypeOfType_ { major, patch, enhancement }
+enum TypeOfversionType { major, patch, enhancement }
 
-interface UpdatesType { name: string; releaseDate: string; bugID: string[]; features: string[]; authors: string[]; type_: TypeOfType_ }
+interface UpdatesType { name: string; releaseDate: string; bugID: string[]; features: string[]; authors: string[]; versionType: TypeOfversionType }
 interface BugDetailsType { bugsID: string; Description: string }
 interface VersionDetailsType { releases: UpdatesType[]; bugDetails: BugDetailsType[] }
 
@@ -12,7 +12,7 @@ let versionDetails: VersionDetailsType = {
             bugID: ["#123", "#736"],
             features: ["voiceCall", "gaming"],
             authors: ["naveen", "manimaran"],
-            type_: TypeOfType_.major
+            versionType: TypeOfversionType.major
         },
         {
             name: "V2",
@@ -20,7 +20,7 @@ let versionDetails: VersionDetailsType = {
             bugID: ["#1M3", "#1S6"],
             features: ["security", "videoQuality"],
             authors: ["kamal", "naveen"],
-            type_: TypeOfType_.patch
+            versionType: TypeOfversionType.patch
         },
         {
             name: "V3",
@@ -28,7 +28,7 @@ let versionDetails: VersionDetailsType = {
             bugID: ["#RT3", "#73"],
             features: ["removingBug", "calender"],
             authors: ["nandhakumar", "naveen"],
-            type_: TypeOfType_.enhancement
+            versionType: TypeOfversionType.enhancement
         },
         {
             name: "V4",
@@ -36,7 +36,7 @@ let versionDetails: VersionDetailsType = {
             bugID: ["#1JI", "#787H"],
             features: ["videoQuality", "soundEffects"],
             authors: ["naveen", "ram"],
-            type_: TypeOfType_.major
+            versionType: TypeOfversionType.major
         },
         {
             name: "V5",
@@ -44,7 +44,7 @@ let versionDetails: VersionDetailsType = {
             bugID: ["#6DHJ7", "#DHU8"],
             features: ["videoCall", "calender"],
             authors: ["kamal", "manimaran"],
-            type_: TypeOfType_.patch
+            versionType: TypeOfversionType.patch
         },],
     bugDetails: [
         { bugsID: "#123", Description: "Possibility of tapping/clicking buttons repeatedly" },
@@ -64,11 +64,11 @@ let versionDetails: VersionDetailsType = {
 
 // Question : 1 , How many releases were made in "_____" ?
 
-var year: string = "2021"                                                               // Enter the year as a string 
+var year: string = "2022"                                                               // Enter the year as a string 
 
 // Question : 2 , In which release did we have the bug "_____" ?
 
-var yourBugID: string = "#1JI"                                                        // Enter the bugg ID here as a string
+var yourBugID: string = "#73"                                                        // Enter the bugg ID here as a string
 
 // Question : 3 , Who is the contributor who has worked on most of the releases?
 
@@ -76,11 +76,11 @@ var yourBugID: string = "#1JI"                                                  
 
 // Question : 4 , How many releases on perticular type ? Ex : major,patch,enhancement
 
-var type_: TypeOfType_ = TypeOfType_.enhancement                                                            // Enter the type
+var versionType: TypeOfversionType = TypeOfversionType.major                                                            // Enter the type
 
 // Question : 5 , How many times the perticular feature updates ?
 
-var feature: string = "videoCall"                                                     // Enter the feature.
+var feature: string = "calender"                                                     // Enter the feature.
 
 // *****************************************************************************************************************
 
@@ -91,68 +91,79 @@ var bugs = versionDetails.bugDetails
 
 // Function 1 : Find no of updates in a year.
 
-function findUpdatesInYear(year:string) :any {
+function findUpdatesInYear(year: string): number {
     let final = updates.filter(element => element.releaseDate.includes(year))
-    console.log(`No of releases in the year ${year} is :`, final.length);
+    return (final.length)
 }
 
 // Function 2 : Finding the release name in which the perticular bug is arises.
 
-function findNameOfReleaseOfABug(bugID :string) :any {
-    updates.forEach(element => {
-        if (element.bugID.includes(bugID)) {
-            console.log(`\nThe name of the release which has the bug '${bugID}' is :`, element.name)
-            bugs.filter(function (element) {
-                if (element.bugsID == bugID) {
-                    console.log(`" Bug ID : ${element.bugsID}`)
-                    console.log(` Description : ${element.Description} "`)
-                }
-            })
-        }
-    })
+function findNameOfReleaseOfABug(bugID: string): string {
+    let version = updates.filter(element => element.bugID.includes(bugID))
+    return version[0].name
 }
 
-// Function 3 : Finding the contributor name who worked more no of project than the others.
+// Function 3 : Finding the bug description
 
-function findTheContributor() :any {
-    let authorNames :any = []
-    var list = updates.map(element => element.authors).forEach(element => element.forEach(element => authorNames.push(element)))
-    let mostFrequent = 1;
-    let m = 0;
-    for (let i = 0; i < authorNames.length; i++) {
-        for (let j = i; j < authorNames.length; j++) {
-            if (authorNames[i] == authorNames[j])
-                m++;
-            if (mostFrequent < m) {
-                mostFrequent = m;
-                var authorName = authorNames[i];
+function findBugDescription(bugID: string): string {
+    let wantedBugDetails = bugs.filter(element => element.bugsID == bugID)
+    return wantedBugDetails[0].Description
+}
+
+// Function 4 : Finding the contributor name who worked more no of project than the others.
+
+function findTheContributor(): any[] {
+    let authorNames: any = []
+    let list = updates.map(element => element.authors).forEach(element => element.forEach(element => authorNames.push(element)))
+    let count = 1;
+    let mostOften = 0;
+    for (let indexOfName = 0; indexOfName < authorNames.length; indexOfName++) {
+        for (let iteration = indexOfName; iteration < authorNames.length; iteration++) {
+            if (authorNames[indexOfName] == authorNames[iteration])
+                mostOften++;
+            if (count < mostOften) {
+                count = mostOften;
+                var authorName = authorNames[indexOfName];
             }
         }
-        m = 0;
+        mostOften = 0;
     }
-    console.log(`\nThe author '${authorName}' has worked on more no of releases, The count is "${mostFrequent}"`);
+
+    return [authorName, count]
 }
 
-// Function 4 : No of releases on perticular type. Ex : major , patch ,enhancement 
+// Function 5 : No of releases on perticular type. Ex : major , patch ,enhancement 
 
-function getNoOfReleasesOfType(typeOfRelease: TypeOfType_) {
-    let final = updates.filter(element => element.type_ == typeOfRelease)
-    console.log(`\nNo of releases of the type '${TypeOfType_[typeOfRelease]}' is :`, final.length);
+function getNoOfReleasesOfType(typeOfRelease: TypeOfversionType): number {
+    let final = updates.filter(element => element.versionType == typeOfRelease)
+    return final.length
 }
 
-// Function 5 : Finding how many times the perticular feature updated.
+// Function 6 : Finding how many times the perticular feature updated.
 
-function getNoOfTimesFeatureUpdate(typeOfFeature: string) {
+function getNoOfTimesFeatureUpdate(typeOfFeature: string): number {
     let final = updates.filter(element => element.features.includes(typeOfFeature))
-    console.log(`\nNo of times the '${typeOfFeature}' feature updated is :`, final.length);
+    return final.length
 }
 
-findUpdatesInYear(year)
+
+let numberOfReleases = findUpdatesInYear(year)
+console.log(`No of releases in the year ${year} is :`, numberOfReleases);
 console.log("_____________________________________________________________________________________")
-findNameOfReleaseOfABug(yourBugID)
+
+let relaseName = findNameOfReleaseOfABug(yourBugID)
+console.log(`\nThe name of the release which has the bug '${yourBugID}' is :`, relaseName)
+console.log(` Bug ID : ${yourBugID}`)
+console.log(` Description : ${findBugDescription(yourBugID)}`)
 console.log("_____________________________________________________________________________________")
-findTheContributor()
+
+let nameAndCount = findTheContributor()
+console.log(`\nThe author '${nameAndCount[0]}' has worked on more no of releases, the count is "${nameAndCount[1]}"`);
 console.log("_____________________________________________________________________________________")
-getNoOfReleasesOfType(type_)
+
+let noOfReleasesOfType = getNoOfReleasesOfType(versionType)
+console.log(`\nNo of releases of the type '${TypeOfversionType[versionType]}' is :`, noOfReleasesOfType);
 console.log("_____________________________________________________________________________________")
-getNoOfTimesFeatureUpdate(feature)
+
+let noOfTimes = getNoOfTimesFeatureUpdate(feature)
+console.log(`\nNo of times the '${feature}' feature updated is :`, noOfTimes);
