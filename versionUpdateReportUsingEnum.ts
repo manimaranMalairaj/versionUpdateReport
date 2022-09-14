@@ -19,7 +19,7 @@ let versionDetails: VersionDetailsType = {
             releaseDate: "25.09.2021",
             bugID: ["#1M3", "#1S6"],
             features: ["security", "videoQuality"],
-            authors: ["kamal", "naveen"],
+            authors: ["manimaran", "naveen"],
             versionType: TypeOfversionType.patch
         },
         {
@@ -27,7 +27,7 @@ let versionDetails: VersionDetailsType = {
             releaseDate: "31.03.2022",
             bugID: ["#RT3", "#73"],
             features: ["removingBug", "calender"],
-            authors: ["nandhakumar", "naveen"],
+            authors: ["manimaran", "naveen"],
             versionType: TypeOfversionType.enhancement
         },
         {
@@ -35,7 +35,7 @@ let versionDetails: VersionDetailsType = {
             releaseDate: "01.04.2022",
             bugID: ["#1JI", "#787H"],
             features: ["videoQuality", "soundEffects"],
-            authors: ["naveen", "ram"],
+            authors: ["naveen", "manimaran"],
             versionType: TypeOfversionType.major
         },
         {
@@ -113,7 +113,7 @@ function findBugDescription(bugID: string): string {
 // Function 4 : Finding the contributor name who worked more no of project than the others.
 
 function findTheContributor(): any[] {
-    let authorNames: any = []
+    let authorNames: string[] = []
     let list = updates.map(element => element.authors).forEach(element => element.forEach(element => authorNames.push(element)))
     let count = 1;
     let mostOften = 0;
@@ -123,7 +123,7 @@ function findTheContributor(): any[] {
                 mostOften++;
             if (count < mostOften) {
                 count = mostOften;
-                var authorName = authorNames[indexOfName];
+                var authorName : string | undefined = authorNames[indexOfName];
             }
         }
         mostOften = 0;
@@ -148,11 +148,11 @@ function getNoOfTimesFeatureUpdate(typeOfFeature: string): number {
 
 
 let numberOfReleases = findUpdatesInYear(year)
-console.log(`No of releases in the year ${year} is :`, numberOfReleases);
+console.log(`No of releases in the year ${year} is : ${numberOfReleases}`);
 console.log("_____________________________________________________________________________________")
 
 let relaseName = findNameOfReleaseOfABug(yourBugID)
-console.log(`\nThe name of the release which has the bug '${yourBugID}' is :`, relaseName)
+console.log(`\nThe name of the release which has the bug '${yourBugID}' is : ${relaseName}`)
 console.log(` Bug ID : ${yourBugID}`)
 console.log(` Description : ${findBugDescription(yourBugID)}`)
 console.log("_____________________________________________________________________________________")
@@ -162,8 +162,8 @@ console.log(`\nThe author '${nameAndCount[0]}' has worked on more no of releases
 console.log("_____________________________________________________________________________________")
 
 let noOfReleasesOfType = getNoOfReleasesOfType(versionType)
-console.log(`\nNo of releases of the type '${TypeOfversionType[versionType]}' is :`, noOfReleasesOfType);
+console.log(`\nNo of releases of the type '${TypeOfversionType[versionType]}' is : ${noOfReleasesOfType}`);
 console.log("_____________________________________________________________________________________")
 
 let noOfTimes = getNoOfTimesFeatureUpdate(feature)
-console.log(`\nNo of times the '${feature}' feature updated is :`, noOfTimes);
+console.log(`\nNo of times the '${feature}' feature updated is : ${noOfTimes}`);
